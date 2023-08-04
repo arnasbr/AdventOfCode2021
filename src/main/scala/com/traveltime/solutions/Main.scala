@@ -164,6 +164,7 @@ object Main {
       4999, 4997, 4998, 4997, 5004, 5005, 5006, 5004, 5005, 5018, 5019, 5021,
       5022, 5028, 5057, 5058, 5063, 5067, 5068)
 
-    println(Day1.part1(list))
+    //println(Day1.part1(list))
+    println(Day1.part2(list))
   }
 }

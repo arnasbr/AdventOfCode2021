@@ -14,4 +14,9 @@ object Day1 {
       else part1(data, count, index + 1, data(index))
     }
   }
+
+  def part2(data: List[Int]): Int = {
+    val sums = data.sliding(3).map(_.sum).toList
+    part1(sums)
+  }
 }
