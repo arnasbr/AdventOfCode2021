@@ -13,6 +13,6 @@ object Main {
       (words(0), words(1).toInt)
     }.toList
 
-    println(Day2.part1(list))
+    println(Day2.part2(list))
   }
 }
