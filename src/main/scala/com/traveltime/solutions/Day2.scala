@@ -6,12 +6,9 @@ object Day2 {
       subInstruction.foldLeft(0)((acc, current) => acc + current._2)
     }
 
-    val forwards = data.filter(x => x._1 == "forward")
-    val ups = data.filter(x => x._1 == "up")
-    val downs = data.filter(x => x._1 == "down")
-    val forwardsSum = sumOfSubInstruction(forwards)
-    val upsSum = sumOfSubInstruction(ups)
-    val downsSum = sumOfSubInstruction(downs)
+    val forwardsSum = sumOfSubInstruction(data.filter(x => x._1 == "forward"))
+    val upsSum = sumOfSubInstruction(data.filter(x => x._1 == "up"))
+    val downsSum = sumOfSubInstruction(data.filter(x => x._1 == "down"))
 
     forwardsSum * (downsSum - upsSum)
   }
