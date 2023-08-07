@@ -3,20 +3,16 @@ package com.traveltime.solutions
 import scala.annotation.tailrec
 
 object Day1 {
-  @tailrec
+  case class Accumulator(counter: Int = 0, previous: Int)
   def part1(
-      data: List[Int],
-      count: Int = 0,
-      previousValue: Int = Int.MaxValue
+      data: List[Int]
   ): Int = {
-    data match {
-      case Nil => count
-      case head :: tail =>
-        if (head > previousValue)
-          part1(tail, count + 1, head)
-        else
-          part1(tail, count, head)
-    }
+    data
+      .sliding(2, 1)
+      .map { case a :: b :: Nil =>
+        a > b
+      }
+      .count(x => x)
   }
 
   def part2(data: List[Int]): Int = {
