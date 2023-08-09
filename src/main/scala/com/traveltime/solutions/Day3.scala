@@ -1,5 +1,7 @@
 package com.traveltime.solutions
 
+import scala.annotation.tailrec
+
 object Day3 {
   def part1(data: List[String]): Long = {
     def binaryToDecimal(binary: List[Int]): Long = {
@@ -19,6 +21,42 @@ object Day3 {
     binaryToDecimal(gamma) * binaryToDecimal(epsilon)
   }
 
+  @tailrec
+  def part2Oxygen(
+      data: List[String],
+      index: Int = 0
+  ): String = {
+    if (data.length == 1) return data.head
+
+    val transposedData = data.transpose
+    val sumOfOnes = transposedData(index).map(x => x == '1').count(_ == true)
+    val sumOfZeroes = transposedData(index).map(x => x == '0').count(_ == true)
+    val moreCommon = if (sumOfOnes >= sumOfZeroes) '1' else '0'
+
+    val filteredOxygen = data.filter(_(index) == moreCommon)
+    //filteredOxygen
+    part2Oxygen(filteredOxygen, index + 1)
+  }
+
+  @tailrec
+  def part2CO2(
+      data: List[String],
+      index: Int = 0
+  ): String = {
+    if (data.length == 1) return data.head
+
+    val transposedData = data.transpose
+    val sumOfOnes = transposedData(index).map(x => x == '1').count(_ == true)
+    val sumOfZeroes = transposedData(index).map(x => x == '0').count(_ == true)
+    val lessCommon =
+      if (sumOfZeroes <= sumOfOnes) '0'
+      else '1'
+
+    val filteredCo2 = data.filter(_(index) == lessCommon)
+    //filteredOxygen
+    part2CO2(filteredCo2, index + 1)
+  }
+
   def main(args: Array[String]): Unit = {
     //val input =
     "00100\n11110\n10110\n10111\n10101\n01111\n00111\n11100\n10000\n11001\n00010\n01010"
@@ -27,6 +65,7 @@ object Day3 {
 
     val lines = input.split("\n").toList
 
-    println(Day3.part1(lines))
+    println(Day3.part2Oxygen(lines))
+    println(Day3.part2CO2(lines))
   }
 }
