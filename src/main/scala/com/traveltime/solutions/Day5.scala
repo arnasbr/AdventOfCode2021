@@ -4,23 +4,19 @@ object Day5 {
   case class Point(x: Int, y: Int)
   case class Vent(start: Point, end: Point)
 
-  private def eitherTraverse[String, Vent](
-      input: List[Either[String, Vent]]
-  ): Either[String, List[Vent]] =
-    input.foldRight[Either[String, List[Vent]]](Right(Nil))((ea, acc) =>
+  private def optionTraverse[A](input: List[Option[A]]): Option[List[A]] =
+    input.foldRight[Option[List[A]]](Some(Nil))((oa, acc) =>
       for {
-        a <- ea
+        a <- oa
         list <- acc
       } yield a :: list
     )
 
-  private def parseInput(input: String): Either[String, List[Vent]] = {
+  private def parseInput(input: String): Option[List[Vent]] = {
     val lines = input.split('\n')
-    eitherTraverse(
+    optionTraverse(
       lines
-        .map(line =>
-          parseLine(line).map(vent => Right(vent)).getOrElse(Left(line))
-        )
+        .map(line => parseLine(line).flatMap(vent => Some(vent)))
         .toList
     )
   }
@@ -46,7 +42,7 @@ object Day5 {
     } yield Point(xInt, yInt)
   }
 
-  def part1(input: Either[String, List[Vent]]): Either[String, Int] = {
+  def part1(input: Option[List[Vent]]): Option[Int] = {
     val allPoints = for {
       vents <- input
       filteredVents = vents.filter { vent =>
