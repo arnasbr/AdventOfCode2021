@@ -122,9 +122,6 @@ object Day5 {
       filtered = points.filter(point => points.count(_ == point) != 1)
     } yield filtered.distinct
 
-    /*val pointsThatAppearNotOnce =
-      allPoints.filter(point => allPoints.count(_ == point) != 1).distinct*/
-
     pointsThatAppearNotOnce.map(x => x.length)
   }
 
