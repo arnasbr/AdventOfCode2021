@@ -78,8 +78,6 @@ object Day5 {
             .toList
 
         } else if (vent.start.y == vent.end.y && vent.start.x != vent.end.x) {
-          val first = vent.start.x
-          val last = vent.end.x
           Range
             .inclusive(vent.start.x min vent.end.x, vent.start.x max vent.end.x)
             .map(value => Point(value, vent.start.y))
