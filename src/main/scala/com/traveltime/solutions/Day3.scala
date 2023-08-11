@@ -27,10 +27,7 @@ object Day3 {
       data: List[String],
       index: Int = 0
   ): String = {
-    if (data.length == 1) return data.headOption match {
-      case Some(value) => value
-      case None        => ""
-    }
+    if (data.length == 1) return data.headOption.getOrElse("")
 
     val transposedData = data.transpose
     val column = Try(transposedData(index)).toOption
