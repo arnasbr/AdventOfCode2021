@@ -37,6 +37,11 @@ object Day5 {
     } yield Point(xInt, yInt)
   }
 
+  private def rangeLowToHigh(start: Int, end: Int): Range.Inclusive = {
+    Range
+      .inclusive(start min end, start max end)
+  }
+
   def part1(input: Option[List[Vent]]): Option[Int] = {
     val allPoints = for {
       vents <- input
@@ -47,12 +52,11 @@ object Day5 {
       allPoints = filteredVents.flatMap { vent =>
         if (vent.start.x == vent.end.x) {
           Range
-            .inclusive(vent.start.y min vent.end.y, vent.start.y max vent.end.y)
+          rangeLowToHigh(vent.start.y, vent.end.y)
             .map(value => (vent.start.x, value))
             .toList
         } else {
-          Range
-            .inclusive(vent.start.x min vent.end.x, vent.start.x max vent.end.x)
+          rangeLowToHigh(vent.start.x, vent.end.x)
             .map(value => (value, vent.start.y))
             .toList
         }
@@ -72,14 +76,12 @@ object Day5 {
       vents <- input
       allPoints = vents.flatMap { vent =>
         if (vent.start.x == vent.end.x && vent.start.y != vent.end.y) {
-          Range
-            .inclusive(vent.start.y min vent.end.y, vent.start.y max vent.end.y)
+          rangeLowToHigh(vent.start.y, vent.end.y)
             .map(value => Point(vent.start.x, value))
             .toList
 
         } else if (vent.start.y == vent.end.y && vent.start.x != vent.end.x) {
-          Range
-            .inclusive(vent.start.x min vent.end.x, vent.start.x max vent.end.x)
+          rangeLowToHigh(vent.start.x, vent.end.x)
             .map(value => Point(value, vent.start.y))
             .toList
 
@@ -91,31 +93,15 @@ object Day5 {
         } else {
           val range1 =
             if (vent.start.x <= vent.end.x)
-              Range.inclusive(
-                vent.start.x min vent.end.x,
-                vent.start.x max vent.end.x
-              )
+              rangeLowToHigh(vent.start.x, vent.end.x)
             else
-              Range
-                .inclusive(
-                  vent.start.x min vent.end.x,
-                  vent.start.x max vent.end.x
-                )
-                .reverse
+              rangeLowToHigh(vent.start.x, vent.end.x).reverse
 
           val range2 =
             if (vent.start.y <= vent.end.y)
-              Range.inclusive(
-                vent.start.y min vent.end.y,
-                vent.start.y max vent.end.y
-              )
+              rangeLowToHigh(vent.start.y, vent.end.y)
             else
-              Range
-                .inclusive(
-                  vent.start.y min vent.end.y,
-                  vent.start.y max vent.end.y
-                )
-                .reverse
+              rangeLowToHigh(vent.start.y, vent.end.y).reverse
 
           range1.zip(range2).map(x => Point(x._1, x._2)).toList
         }
