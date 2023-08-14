@@ -4,7 +4,7 @@ import scala.annotation.tailrec
 
 object Day1 {
   case class Accumulator(counter: Int = 0, previous: Int)
-  def part1(
+  private def part1(
       data: List[Int]
   ): Int = {
     data

@@ -36,7 +36,7 @@ object Day2 {
     forwardsSum * (downsSum - upsSum)
   }
 
-  def part2(data: List[Instruction]): Int = {
+  private def part2(data: List[Instruction]): Int = {
     val results = data.foldLeft(Results(0, 0, 0)) { case (res, instruction) =>
       instruction.name match {
         case Forward =>

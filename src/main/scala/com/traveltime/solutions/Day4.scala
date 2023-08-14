@@ -5,7 +5,7 @@ import scala.util.Try
 object Day4 {
   case class Board(lines: List[List[Int]])
 
-  object Board {
+  private object Board {
     def parse(inputBoard: String): Board = {
       val numberParser = raw"\d+".r
 
@@ -16,7 +16,7 @@ object Day4 {
       Board(lines.map(parseLine))
     }
   }
-  def part12(
+  private def part12(
       originalBoards: List[Board],
       numbers: List[Int]
   ): (Option[Int], Option[Int]) = {

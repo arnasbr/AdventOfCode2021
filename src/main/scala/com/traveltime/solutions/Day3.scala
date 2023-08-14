@@ -23,7 +23,7 @@ object Day3 {
   }
 
   @tailrec
-  def part2Oxygen(
+  private def part2Oxygen(
       data: List[String],
       index: Int = 0
   ): String = {
@@ -48,7 +48,7 @@ object Day3 {
   }
 
   @tailrec
-  def part2CO2(
+  private def part2CO2(
       data: List[String],
       index: Int = 0
   ): String = {
