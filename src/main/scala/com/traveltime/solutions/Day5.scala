@@ -5,14 +5,6 @@ object Day5 {
   case class Point(x: Int, y: Int)
   case class Vent(start: Point, end: Point)
 
-  private def optionTraverse[A](input: List[Option[A]]): Option[List[A]] =
-    input.foldRight[Option[List[A]]](Some(Nil))((oa, acc) =>
-      for {
-        a <- oa
-        list <- acc
-      } yield a :: list
-    )
-
   private def parseInput(input: String): Option[List[Vent]] = {
     input
       .split('\n')
