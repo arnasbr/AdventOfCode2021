@@ -1,17 +1,13 @@
 package com.traveltime.solutions
 
+import com.traveltime.solutions.Implicits.OptionTraversable
+
 import scala.util.Try
 
 object Day6 {
-  private def optionTraverse[A](input: List[Option[A]]): Option[List[A]] =
-    input.foldRight[Option[List[A]]](Some(Nil))((oa, acc) =>
-      for {
-        a <- oa
-        list <- acc
-      } yield a :: list
-    )
+
   private def parseIntList(input: String): Option[List[Int]] = {
-    optionTraverse(input.split(",").map(_.toIntOption).toList)
+    input.split(",").map(_.toIntOption).toList.traverseOptions
   }
 
   def part1(fish: Option[List[Int]], n: Int): Option[Int] = {
@@ -71,7 +67,7 @@ object Day6 {
       "3,5,1,2,5,4,1,5,1,2,5,5,1,3,1,5,1,3,2,1,5,1,1,1,2,3,1,3,1,2,1,1,5,1,5,4,5,5,3,3,1,5,1,1,5,5,1,3,5,5,3,2,2,4,1,5,3,4,2,5,4,1,2,2,5,1,1,2,4,4,1,3,1,3,1,1,2,2,1,1,5,1,1,4,4,5,5,1,2,1,4,1,1,4,4,3,4,2,2,3,3,2,1,3,3,2,1,1,1,2,1,4,2,2,1,5,5,3,4,5,5,2,5,2,2,5,3,3,1,2,4,2,1,5,1,1,2,3,5,5,1,1,5,5,1,4,5,3,5,2,3,2,4,3,1,4,2,5,1,3,2,1,1,3,4,2,1,1,1,1,2,1,4,3,1,3,1,2,4,1,2,4,3,2,3,5,5,3,3,1,2,3,4,5,2,4,5,1,1,1,4,5,3,5,3,5,1,1,5,1,5,3,1,2,3,4,1,1,4,1,2,4,1,5,4,1,5,4,2,1,5,2,1,3,5,5,4,5,5,1,1,4,1,2,3,5,3,3,1,1,1,4,3,1,1,4,1,5,3,5,1,4,2,5,1,1,4,4,4,2,5,1,2,5,2,1,3,1,5,1,2,1,1,5,2,4,2,1,3,5,5,4,1,1,1,5,5,2,1,1"
     val fish1 = parseIntList(input)
     val fish2 = parseMap(myInput)
-    //println(part1(fish1, 80))
+    println(part1(fish1, 80))
     println(simulate(256, fish2))
   }
 }

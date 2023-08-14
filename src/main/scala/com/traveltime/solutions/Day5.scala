@@ -1,4 +1,5 @@
 package com.traveltime.solutions
+import com.traveltime.solutions.Implicits.OptionTraversable
 
 object Day5 {
   case class Point(x: Int, y: Int)
@@ -13,12 +14,11 @@ object Day5 {
     )
 
   private def parseInput(input: String): Option[List[Vent]] = {
-    optionTraverse(
-      input
-        .split('\n')
-        .map(line => parseLine(line).flatMap(vent => Some(vent)))
-        .toList
-    )
+    input
+      .split('\n')
+      .map(line => parseLine(line).flatMap(vent => Some(vent)))
+      .toList
+      .traverseOptions
   }
 
   def parseLine(line: String): Option[Vent] = {
