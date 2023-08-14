@@ -18,6 +18,26 @@ object Day7 {
       )
     } yield sumOfFuel
   }
+
+  def part2(data: Option[List[Int]]): Option[Long] = {
+    def fuelCost(n: Int): Int = n * (n + 1) / 2
+
+    def calculateTotalCost(positions: List[Int], target: Int): Long =
+      positions.foldLeft(0L)((acc, position) =>
+        acc + fuelCost(Math.abs(target - position))
+      )
+
+    for {
+      positions <- data
+      min = positions.min
+      max = positions.max
+
+      totalCost = (min to max).foldLeft(Long.MaxValue)((best, targetPos) =>
+        Math.min(best, calculateTotalCost(positions, targetPos))
+      )
+    } yield totalCost
+  }
+
   def main(args: Array[String]): Unit = {
     val input = "16,1,2,0,4,2,7,1,2,14"
     val myInput =
@@ -26,5 +46,6 @@ object Day7 {
     val data = parseInput(myInput)
 
     println(part1(data))
+    println(part2(data))
   }
 }
