@@ -8,13 +8,7 @@ object Day7 {
   }
 
   def part1(data: Option[List[Int]]): Option[Int] = {
-    val medianOpt = data.flatMap(x =>
-      if (x.length % 2 == 0) {
-        x.sorted.drop(x.length / 2).headOption
-      } else {
-        x.sorted.drop(x.length / 2 + 1).headOption
-      }
-    )
+    val medianOpt = data.flatMap(x => x.sorted.drop(x.length / 2).headOption)
 
     for {
       positions <- data
