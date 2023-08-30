@@ -19,19 +19,9 @@ object Day9 {
         Option.when(y < height - 1)(data(x)(y + 1))
       )
 
-      val smallerCount = neighbors.count(x =>
-        x match {
-          case Some(value) => current < value
-          case None        => false
-        }
-      )
+      val smallerCount = neighbors.count(x => x.exists(_ > current))
 
-      val neighborCount = neighbors.count(x =>
-        x match {
-          case Some(value) => true
-          case None        => false
-        }
-      )
+      val neighborCount = neighbors.count(_.isDefined)
 
       if (smallerCount == neighborCount) data(pos.x)(pos.y) + 1
       else 0
