@@ -2,23 +2,37 @@ package com.traveltime.solutions
 
 import scala.util.Try
 
-object Day8 {
-  private def parseInputPart1(input: String): Option[List[String]] = {
-    Try(
-      input
-        .split("\n")
-        .flatMap(line => line.split("\\|").tail)
-        .flatMap(str => str.split(" "))
-        .toList
-    ).toOption
+object Day8_part1 {
+  private def parseInputPart1(input: String): List[String] = {
+
+    val lines = input.split("\n")
+
+    lines.foldLeft(List[String]())((acc, line) =>
+      line match {
+        case s"$_ | $a $b $c $d" => a :: b :: c :: d :: acc
+        case _                   => "" :: acc
+      }
+    )
   }
 
-  def part1(input: Option[List[String]]): Option[Int] = {
-    input.map(data =>
-      data.count(x =>
-        x.length == 2 || x.length == 3 || x.length == 4 || x.length == 7
-      )
+  def part1(input: List[String]): Int = {
+    input.count(x =>
+      x.length == 2 || x.length == 3 || x.length == 4 || x.length == 7
     )
+  }
+
+  def parseNames(input: String): List[String] = {
+    input.foldLeft(("", List.empty[String])) {
+      case ((currentName, names), char) if char == '\n' =>
+        ("", names :+ currentName)
+      case ((currentName, names), char) =>
+        (currentName + char, names)
+    } match {
+      case (currentName, names) if currentName.nonEmpty =>
+        names :+ currentName
+      case (_, names) =>
+        names
+    }
   }
 
   def main(args: Array[String]): Unit = {
@@ -27,5 +41,9 @@ object Day8 {
 
     val data = parseInputPart1(myInput)
     println(part1(data))
+
+    val input = "John\nAlice\nBob\nEve"
+    val names = parseNames(input)
+    println(names) // Output: List(John, Alice, Bob, Eve)
   }
 }
