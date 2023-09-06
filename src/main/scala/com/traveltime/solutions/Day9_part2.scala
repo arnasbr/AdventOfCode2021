@@ -62,7 +62,7 @@ object Day9_part2 {
       if (toVisit.isEmpty) basinAcc
       else {
         val (currentPos, remaining) = toVisit.dequeue
-        val newNodes = heightmap.neighboursOf(currentPos).toList.collect {
+        val newNodes = heightmap.neighboursOf(currentPos).collect {
           case (pos, height) if !visited(currentPos) && height != 9 => pos
         }
         iter(visited + currentPos, remaining ++ newNodes, basinAcc ++ newNodes)
@@ -76,7 +76,7 @@ object Day9_part2 {
       heightMap <- heightMapOpt
       lowPoints = heightMap.lowPointsPositions
       basins = lowPoints.map(basin(_, heightMap))
-    } yield basins.toList
+    } yield basins
       .map(_.size)
       .sorted(Ordering[Int].reverse)
       .take(3)
